@@ -1,0 +1,111 @@
+# =================================================================
+# 1. Namespace: A dedicated space for our monitoring tools
+# =================================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+
+---
+# =================================================================
+# 2. RBAC: Permissions for Prometheus to discover services
+# =================================================================
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus-sa
+  namespace: monitoring
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus-cr
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes
+  - services
+  - endpoints
+  - pods
+  verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: prometheus-crb
+subjects:
+- kind: ServiceAccount
+  name: prometheus-sa
+  namespace: monitoring
+roleRef:
+  kind: ClusterRole
+  name: prometheus-cr
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# =================================================================
+# 3. Deployment: Defines how to run the Prometheus pod
+# =================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-deployment
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      # --- Link to the Service Account with permissions ---
+      serviceAccountName: prometheus-sa
+      containers:
+      - name: prometheus
+        image: prom/prometheus:v2.47.2 # Using a specific stable version
+        args:
+        - "--config.file=/etc/prometheus/prometheus.yml"
+        ports:
+        - containerPort: 9090
+
+        # --- Best Practice: Resource Management ---
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "250m"
+
+        # --- Mount the ConfigMap as a volume ---
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/prometheus
+      volumes:
+      - name: config-volume
+        configMap:
+          name: prometheus-config
+
+---
+# =================================================================
+# 4. Service: Exposes the Prometheus UI
+# =================================================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+  namespace: monitoring
+spec:
+  selector:
+    app: prometheus
+  type: NodePort # Ideal for accessing the UI in Minikube
+  ports:
+  - protocol: TCP
+    port: 9090       # Internal port within the cluster
+    targetPort: 9090 # Port on the Prometheus container
+    nodePort: 32001    # External port to access from your browser

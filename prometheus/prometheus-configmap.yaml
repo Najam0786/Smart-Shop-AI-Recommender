@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  labels:
+    app: prometheus
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s # Scrape metrics every 15 seconds
+
+    scrape_configs:
+      # Job to scrape Prometheus itself
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['localhost:9090']
+
+      # --- Best Practice: Use Kubernetes Service Discovery ---
+      # Job to dynamically discover and scrape the Flask application pods
+      - job_name: 'shopsmart-ai-app'
+        # This tells Prometheus to ask the Kubernetes API for scrape targets
+        kubernetes_sd_configs:
+          - role: endpoints
+        # This section filters the discovered endpoints to find our app
+        relabel_configs:
+          # Keep only the endpoints that belong to our service
+          - source_labels: [__meta_kubernetes_service_label_app]
+            action: keep
+            regex: shopsmart-ai
+          # Scrape on the correct port (5000)
+          - source_labels: [__meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: http

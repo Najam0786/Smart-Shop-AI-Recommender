@@ -1,0 +1,229 @@
+/* --- 1. Root Variables for Easy Theming --- */
+:root {
+    --bg-gradient-start: #1e1e2f;
+    --bg-gradient-end: #222b3a;
+    --card-bg: #2a2d3e;
+    --chat-body-bg: #1c1e2a;
+    --header-footer-bg: #1a1c28;
+    --user-msg-bg: #4a4e69;
+    --bot-msg-bg: #007bff;
+    --accent-color: #00bfff; /* Deep Sky Blue */
+    --text-primary: #f1f1f1;
+    --text-secondary: #b0b0b0;
+    --font-family: 'Inter', sans-serif;
+}
+
+/* --- 2. General Body and Layout --- */
+body, html {
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(to right, var(--bg-gradient-start), var(--bg-gradient-end));
+    font-family: var(--font-family);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* --- 3. Main Chat Card --- */
+.chat {
+    width: 100%;
+    height: 100%;
+    max-height: 800px; /* Max height for larger screens */
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 20px;
+    background-color: var(--card-bg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden; /* Ensures child elements respect the border-radius */
+}
+
+/* --- 4. Card Header & Footer --- */
+.card-header,
+.card-footer {
+    background-color: var(--header-footer-bg);
+    border: none;
+    padding: 1rem 1.5rem;
+    color: var(--text-primary);
+    flex-shrink: 0; /* Prevents header/footer from shrinking */
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user_info span {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.user_info p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* --- 5. Chat Message Area --- */
+.msg_card_body {
+    flex-grow: 1; /* Allows this area to fill available space */
+    overflow-y: auto;
+    padding: 1.5rem;
+    background-color: var(--chat-body-bg);
+}
+
+/* --- 6. Message Bubbles --- */
+.msg_cotainer,
+.msg_cotainer_send {
+    max-width: 75%;
+    padding: 12px 18px;
+    border-radius: 20px;
+    position: relative;
+    word-wrap: break-word;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.msg_cotainer { /* Bot's message */
+    background-color: var(--bot-msg-bg);
+    color: white;
+    margin-left: 10px;
+}
+
+.msg_cotainer_send { /* User's message */
+    background-color: var(--user-msg-bg);
+    color: var(--text-primary);
+    margin-right: 10px;
+}
+
+.msg_time,
+.msg_time_send {
+    font-size: 0.7rem;
+    position: absolute;
+    bottom: -20px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.msg_time { left: 5px; }
+.msg_time_send { right: 5px; }
+
+/* --- 7. Avatars & Icons --- */
+.user_img,
+.user_img_msg {
+    height: 40px;
+    width: 40px;
+    border: 2px solid var(--accent-color);
+}
+
+.img_cont {
+    position: relative;
+    margin-right: 15px;
+}
+
+.online_icon {
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    background-color: #28a745;
+    border-radius: 50%;
+    bottom: 0px;
+    right: 0px;
+    border: 2px solid var(--card-bg);
+}
+
+/* --- 8. Input Form --- */
+.type_msg {
+    background-color: var(--chat-body-bg);
+    border: 1px solid var(--user-msg-bg);
+    color: var(--text-primary) !important;
+    height: 50px;
+    border-radius: 25px 0 0 25px;
+    padding-left: 20px;
+    transition: background-color 0.3s;
+}
+
+.type_msg::placeholder {
+    color: var(--text-secondary);
+    opacity: 1;
+}
+
+.type_msg:focus {
+    outline: none;
+    box-shadow: none;
+    background-color: var(--card-bg);
+    border-color: var(--accent-color);
+}
+
+.send_btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 60px;
+}
+
+.send_btn:hover {
+    background-color: #009acd; /* Darker shade of accent color */
+}
+
+/* --- 9. Custom Scrollbar --- */
+.msg_card_body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.msg_card_body::-webkit-scrollbar-track {
+    background: var(--chat-body-bg);
+}
+
+.msg_card_body::-webkit-scrollbar-thumb {
+    background-color: var(--user-msg-bg);
+    border-radius: 10px;
+    border: 2px solid var(--chat-body-bg);
+}
+
+/* --- 10. Animations --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- 11. Responsive Design --- */
+@media (max-width: 768px) {
+    body, html {
+        padding: 0;
+    }
+    .chat {
+        max-height: none;
+    }
+    .card {
+        height: 100vh;
+        width: 100vw;
+        border-radius: 0;
+    }
+    .msg_cotainer, .msg_cotainer_send {
+        max-width: 85%;
+    }
+}
