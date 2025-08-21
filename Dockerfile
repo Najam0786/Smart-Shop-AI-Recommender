@@ -15,9 +15,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends build-essential && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy only the files needed to install dependencies
-# This optimizes Docker's layer caching.
-COPY requirements.txt setup.py ./
+# --- THIS IS THE CORRECTED LINE ---
+# Copy all files needed for the installation step
+COPY requirements.txt setup.py README.md ./
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -e .
@@ -48,5 +48,4 @@ COPY . .
 EXPOSE 5000
 
 # Command to run the application using a production-ready server (gunicorn)
-# Note: You'll need to add gunicorn to your requirements.txt
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:create_app()"]
