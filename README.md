@@ -1,145 +1,72 @@
-Shop Smart AI Recommender
+# 🛍️ Shop Smart AI Recommender - LLMOps Project
 
-A conversational AI-powered product recommendation system built with a modern LLMOps stack, containerized with Docker, and deployed on Kubernetes.
-Final Application
-✨ Features
+Welcome to the **Shop Smart AI Recommender**! This project showcases a complete, end-to-end LLMOps pipeline for a conversational AI application. The system provides intelligent product recommendations based on real customer reviews, all wrapped in a modern, cloud-native architecture.
 
-    Conversational RAG Chain: Utilizes a Retrieval-Augmented Generation (RAG) architecture to answer user questions based on a knowledge base of product reviews.
+---
 
-    Context-Aware Memory: Remembers the context of the conversation to answer follow-up questions intelligently.
+### 🚀 Project Overview
 
-    Cloud-Native Deployment: Fully containerized with Docker and orchestrated with Kubernetes for scalability and resilience.
+This application provides intelligent product recommendations using a Retrieval-Augmented Generation (RAG) architecture. It demonstrates:
 
-    Real-time Monitoring: Integrated with Prometheus and Grafana for observing application health and performance.
+-   **Local Development**: Building a robust Python application with a clear, modular structure.
+-   **Containerization**: Packaging the application and its dependencies using Docker for portability.
+-   **Cloud Deployment**: Orchestrating the entire application stack on a Google Cloud VM using Kubernetes (Minikube).
+-   **Secure Configuration**: Managing secrets and API keys safely with Kubernetes Secrets.
+-   **Real-time Monitoring**: Observing application health and performance with Prometheus and Grafana.
+-   **CI/CD Ready**: A clean project structure ready for future automation workflows.
 
-    Secure Configuration: Manages all API keys and secrets securely using environment variables and Kubernetes Secrets.
+---
 
-🛠️ Technology Stack
+### 🛠️ Tech Stack
 
-Category
+| Tool                      | Purpose                                              |
+| ------------------------- | ---------------------------------------------------- |
+| **Python** | Core application development                         |
+| **LangChain** | Framework for building the RAG chain                 |
+| **Groq & Hugging Face** | LLM and embedding models                             |
+| **Flask** | Web framework for the backend API                    |
+| **Astra DB** | Cloud-native vector database                         |
+| **Docker** | Containerization                                     |
+| **Kubernetes (Minikube)** | Orchestration and deployment                         |
+| **GCP** | Infrastructure hosting                               |
+| **Prometheus & Grafana** | Observability and monitoring                       |
 
+---
 
-Technology
+### 🖼️ Screenshots
 
-AI/ML
+Here is a snapshot of the deployed Shop Smart AI Recommender in action:
 
+![Shop Smart AI Chat Interface](./assets/shop_smart_ai_pic2.png)
 
-LangChain, Groq, Hugging Face sentence-transformers
+---
 
-Web & Backend
+### 📂 Project Structure
 
+/├── assets/                 # Project images and screenshots├── chain/                  # Core RAG chain logic├── config/                 # Application configuration├── data/                   # Raw dataset├── grafana/                # Grafana Kubernetes manifests├── prometheus/             # Prometheus Kubernetes manifests├── static/                 # CSS and other static assets├── templates/              # HTML templates├── utils/                  # Reusable helper modules├── .env                    # (Local Only) Secret keys and APIs├── .gitignore              # Files to be ignored by Git├── app.py                  # Main Flask application entry point├── Dockerfile              # Instructions to build the container image├── flask-deployment.yaml   # Kubernetes manifest for the Flask app├── requirements.txt        # Python dependencies└── setup.py                # Project packaging script
+---
 
-Flask
+### ⚙️ Setup and Deployment Instructions
 
-Database
+For a detailed guide on local setup and cloud deployment, please refer to our comprehensive **[Project Documentation](./project_document.md)**.
 
+The guide includes:
+-   GitHub setup and initial push 📤
+-   Local setup with a Python virtual environment 🐍
+-   Docker image build process 🐳
+-   Kubernetes and Minikube configuration on a GCP VM ☁️
+-   Prometheus and Grafana integration for monitoring 📊
 
-Astra DB (Vector Store)
+---
 
-Cloud & Infra
+### 👨‍💻 Author
 
+-   **Name**: Nazmul Farooquee
+-   **GitHub**: [Najam0786](https://github.com/Najam0786)
+-   **Email**: nazmulfarooquee@gmail.com
 
-GCP, Docker, Kubernetes (Minikube)
+---
 
-Monitoring
+### 📄 License
 
-
-Prometheus, Grafana
-🚀 Local Setup and Usage
-
-Follow these steps to set up and run the project on your local machine.
-Prerequisites
-
-    Python 3.10+
-
-    An account with Astra DB
-
-    API keys for Groq and Hugging Face
-
-1. Clone the Repository
-
-git clone [https://github.com/Najam0786/Smart-Shop-AI-Recommender.git](https://github.com/Najam0786/Smart-Shop-AI-Recommender.git)
-cd Smart-Shop-AI-Recommender
-
-2. Create and Activate a Virtual Environment
-
-# For Windows
-python -m venv env
-.\env\Scripts\activate
-
-# For macOS/Linux
-python3 -m venv env
-source env/bin/activate
-
-3. Set Up Environment Variables
-
-    Create a file named .env in the root of the project.
-
-    Add the following keys with your credentials:
-
-GROQ_API_KEY="your_groq_api_key"
-HUGGINGFACEHUB_API_TOKEN="your_huggingface_api_token"
-ASTRA_DB_API_ENDPOINT="your_astra_db_endpoint"
-ASTRA_DB_APPLICATION_TOKEN="your_astra_db_token"
-ASTRA_DB_KEYSPACE="your_keyspace_name"
-FLASK_SECRET_KEY="run_python_-c_import_secrets;_print(secrets.token_hex())_to_generate"
-
-4. Install Dependencies
-
-Install the project and all its dependencies in editable mode.
-
-pip install -e .
-
-5. Ingest Data into Astra DB
-
-Run the data ingestion script. This only needs to be done once.
-
-python utils/data_ingestion.py
-
-6. Run the Flask Application
-
-python app.py
-
-The application will be available at http://127.0.0.1:5000.
-☁️ Deployment on GCP with Kubernetes
-
-This project is designed for cloud deployment. The high-level steps are:
-
-    Create a GCP VM: Set up an E2-Standard Ubuntu VM with at least 16GB RAM and 256GB storage.
-
-    Configure VM: Install Docker, Minikube, and kubectl on the VM.
-
-    Sync Code: Clone the repository onto the VM.
-
-    Build Image: Run eval $(minikube docker-env) and then docker build -t shopsmart-ai-app:latest . to build the image inside Minikube.
-
-    Create Secrets: Manually create a .env file on the VM and run kubectl create secret generic ... to create the Kubernetes secret.
-
-    Deploy: Apply all the .yaml files using kubectl apply -f [filename].
-
-    Expose Service: Use kubectl port-forward to access the application and monitoring dashboards.
-
-For detailed commands, please refer to the project_document.md.
-📂 Project Structure
-
-/
-├── assets/                 # Project images and screenshots
-├── chain/                  # Core RAG chain logic
-├── config/                 # Application configuration
-├── data/                   # Raw dataset
-├── grafana/                # Grafana Kubernetes manifests
-├── prometheus/             # Prometheus Kubernetes manifests
-├── static/                 # CSS and other static assets
-├── templates/              # HTML templates
-├── utils/                  # Reusable helper modules
-├── .env                    # (Local Only) Secret keys and APIs
-├── .gitignore              # Files to be ignored by Git
-├── app.py                  # Main Flask application entry point
-├── Dockerfile              # Instructions to build the container image
-├── flask-deployment.yaml   # Kubernetes manifest for the Flask app
-├── requirements.txt        # Python dependencies
-└── setup.py                # Project packaging script
-
-📄 License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. Feel free to use, modify, and share!
