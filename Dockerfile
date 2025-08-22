@@ -10,13 +10,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Set the working directory
 WORKDIR /app
 
-# Install system dependencies needed for building some Python packages
+# Install system dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends build-essential && \
     rm -rf /var/lib/apt/lists/*
 
-# --- THIS IS THE CORRECTED LINE ---
-# Copy all files needed for the installation step
+# Copy files needed for installation
 COPY requirements.txt setup.py README.md ./
 
 # Install Python dependencies
@@ -38,14 +37,15 @@ WORKDIR /app
 RUN addgroup --system app && adduser --system --group app
 USER app
 
-# Copy the installed virtual environment from the builder stage
+# Copy installed environment from the builder stage
 COPY --from=builder /app /app
 
 # Copy the rest of the application source code
 COPY . .
 
-# Expose the port the app runs on
+# Expose the port
 EXPOSE 5000
 
-# Command to run the application using a production-ready server (gunicorn)
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:create_app()"]
+# --- THIS IS THE CORRECTED COMMAND ---
+# Run the app using Flask's built-in server as per the course
+CMD ["python", "app.py"]

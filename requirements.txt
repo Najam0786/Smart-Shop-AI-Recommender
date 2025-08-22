@@ -1,7 +1,9 @@
 # ======= Core Flask Web App & Configuration =======
 flask==3.0.3
 python-dotenv==1.0.1
-gunicorn
+
+
+
 
 # ======= LangChain Framework (Stable Versions) =======
 langchain~=0.2.5
