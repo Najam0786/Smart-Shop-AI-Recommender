@@ -1,7 +1,7 @@
 # =================================================================
 # Stage 1: Builder - Install dependencies
 # =================================================================
-FROM python:3.10-slim as builder
+FROM python:3.10-slim AS builder
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir -e .
 # =================================================================
 # Stage 2: Final Image - Create the production image
 # =================================================================
-FROM python:3.10-slim as final
+FROM python:3.10-slim AS final
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -37,15 +37,15 @@ WORKDIR /app
 RUN addgroup --system app && adduser --system --group app
 USER app
 
-# Copy installed environment from the builder stage
-COPY --from=builder /app /app
+# --- THIS IS THE CRITICAL FIX ---
+# Copy the installed packages from the builder stage's site-packages
+COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
 
-# Copy the rest of the application source code
+# Copy the application source code
 COPY . .
 
 # Expose the port
 EXPOSE 5000
 
-# --- THIS IS THE CORRECTED COMMAND ---
-# Run the app using Flask's built-in server as per the course
+# Run the app using Flask's built-in server
 CMD ["python", "app.py"]
