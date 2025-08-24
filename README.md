@@ -43,7 +43,42 @@ Here is a snapshot of the deployed Shop Smart AI Recommender in action:
 
 ### 📂 Project Structure
 
-/├── assets/                 # Project images and screenshots├── chain/                  # Core RAG chain logic├── config/                 # Application configuration├── data/                   # Raw dataset├── grafana/                # Grafana Kubernetes manifests├── prometheus/             # Prometheus Kubernetes manifests├── static/                 # CSS and other static assets├── templates/              # HTML templates├── utils/                  # Reusable helper modules├── .env                    # (Local Only) Secret keys and APIs├── .gitignore              # Files to be ignored by Git├── app.py                  # Main Flask application entry point├── Dockerfile              # Instructions to build the container image├── flask-deployment.yaml   # Kubernetes manifest for the Flask app├── requirements.txt        # Python dependencies└── setup.py                # Project packaging script
+```
+.
+├── assets/                 # Project images and screenshots
+│   └── shop_smart_ai_pic2.png
+├── chain/                  # Core RAG chain logic
+│   ├── __init__.py
+│   └── rag_chain.py
+├── config/                 # Application configuration
+│   ├── __init__.py
+│   └── config.py
+├── data/                   # Raw dataset
+│   └── flipkart_product_review.csv
+├── grafana/                # Grafana Kubernetes manifests
+│   └── grafana-deployment.yaml
+├── prometheus/             # Prometheus Kubernetes manifests
+│   ├── prometheus-configmap.yaml
+│   └── prometheus-deployment.yaml
+├── static/                 # CSS and other static assets
+│   └── style.css
+├── templates/              # HTML templates
+│   └── index.html
+├── utils/                  # Reusable helper modules
+│   ├── __init__.py
+│   ├── custom_exception.py
+│   ├── data_converter.py
+│   ├── data_ingestion.py
+│   └── logger.py
+├── .env                    # (Local Only) Secret keys and APIs
+├── .gitignore              # Files to be ignored by Git
+├── app.py                  # Main Flask application entry point
+├── Dockerfile              # Instructions to build the container image
+├── flask-deployment.yaml   # Kubernetes manifest for the Flask app
+├── requirements.txt        # Python dependencies
+└── setup.py                # Project packaging script
+```
+
 ---
 
 ### ⚙️ Setup and Deployment Instructions
