@@ -38,9 +38,11 @@ This application provides intelligent product recommendations using a Retrieval-
 Here are a few snapshots of the deployed Shop Smart AI Recommender in action:
 
 **Chat Interface**
+
 ![Shop Smart AI Chat Interface](./assets/shop_smart_ai_pic2.png)
 
 **Monitoring Dashboard**
+
 ![Grafana Monitoring Dashboard](./assets/grafana_dashboard.png)
 
 ---
