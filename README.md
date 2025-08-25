@@ -38,12 +38,10 @@ This application provides intelligent product recommendations using a Retrieval-
 Here are a few snapshots of the deployed Shop Smart AI Recommender in action:
 
 **Chat Interface**
-
 ![Shop Smart AI Chat Interface](./assets/shop_smart_ai_pic2.png)
 
-**Monitoring Dashboard**
-
-![Grafana Monitoring Dashboard](./assets/grafana_dashboard.png)
+**Business Intelligence Dashboard**
+![Power BI Dashboard](./assets/powerbi_dashboard.png)
 
 ---
 
@@ -52,7 +50,8 @@ Here are a few snapshots of the deployed Shop Smart AI Recommender in action:
 ```
 .
 ├── assets/                 # Project images and screenshots
-│   └── shop_smart_ai_pic2.png
+│   ├── shop_smart_ai_pic2.png
+│   └── powerbi_dashboard.png
 ├── chain/                  # Core RAG chain logic
 │   ├── __init__.py
 │   └── rag_chain.py
